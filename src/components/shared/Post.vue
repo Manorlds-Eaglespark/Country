@@ -39,7 +39,7 @@
 <script>
 import TimeAgo from 'vue2-timeago'
 import axios from 'axios'
-import SinglePost from './SinglePost.vue'
+import SinglePost from '@/components/shared/SinglePost.vue'
 export default {
     props: ["posts", "url"],
     components: {TimeAgo,SinglePost},

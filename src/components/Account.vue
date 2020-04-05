@@ -3,14 +3,13 @@
     <ToolBar></ToolBar>
       <template>
         <v-card class="mx-auto my-1" max-width="98%">
-          <img v-if="profile_image" :src="profile_image" class="mt-4 account-image"/>
-          <img v-else src="../assets/idea.svg" class="mt-4 account-image"/>
+          <img v-if="profile_image" :src="profile_image" class="pt-2 account-image"/>
+          <img v-else src="@/assets/idea.svg" class="pt-2 account-image"/>
           <div v-show="getShowEditForm">
             <v-form @submit.prevent="saveEditedDetail">
               <v-container>
                 <v-row>
                   <v-col cols="12" md="1">
- 
                     <v-file-input filled accept="image/*" v-model="profile_img" label="Change Your Profile Picture" prepend-icon="mdi-camera"></v-file-input>
                   </v-col>
                   <v-col cols="12" md="1">
@@ -51,7 +50,7 @@
                 <v-col>
                   <v-card class="pa-0" tile elevation="0">
                     <v-btn @click="showBookmarkedPosts" text class="full-size">
-                      <v-icon color="grey darken-2">mdi-bookmark-outline</v-icon>
+                      <v-icon class="mx-2" color="grey darken-2">mdi-bookmark-outline</v-icon>
                       Bookmarked
                     </v-btn>
                   </v-card>
@@ -59,15 +58,23 @@
                 <v-col>
                   <v-card class="pa-0" tile elevation="0">
                     <v-btn @click="showUserPosts" text class="full-size">
-                      <v-icon outline color="grey darken-2">fa fa-user</v-icon>
+                      <v-icon outline class="mx-2" color="grey darken-2">mdi-storefront</v-icon>
+                      &nbsp;My Shop
+                    </v-btn>
+                  </v-card>
+                </v-col>
+                <v-col>
+                  <v-card class="pa-0" tile elevation="0">
+                    <v-btn @click="showUserPosts" text class="full-size">
+                      <v-icon outline class="mx-2" color="grey darken-2">mdi-account-circle</v-icon>
                       &nbsp;By me
                     </v-btn>
                   </v-card>
                 </v-col>
               </v-row>
           </v-container>
-          <Post v-if="getShowUserPosts" :posts="getAllPosts" :url="'http://127.0.0.1:5000/api/v1/posts/user?page='"/>
-          <Post v-else :posts="getAllPosts" :url="'http://127.0.0.1:5000/api/v1/posts/bookmarked?page='"/>
+          <Post v-if="getShowUserPosts" :posts="getAllPosts" :url="userPostsUrl"/>
+          <Post v-else :posts="getAllPosts" :url="userBookmarkedPostsUrl"/>
         </v-card>
       </template>
       <v-snackbar v-model="snackbar" :multi-line="multiLine">
@@ -88,7 +95,6 @@
   import Post from '@/components/shared/Post';
 export default {
 
-
     components:{ToolBar, BottomNavigation, Post},
     data: () => ({
       show: false,
@@ -103,6 +109,8 @@ export default {
       show_user_posts: false,
       user_data: {},
       loading: false,
+      userPostsUrl: `${process.env.ROOT_API}/api/v1/posts/user?page=1`,
+      userBookmarkedPostsUrl:`${process.env.ROOT_API}/api/v1/posts/bookmarked?page=`,
       snackbarText: '',
       user_name: '',
       user_email: '',
@@ -144,7 +152,7 @@ export default {
     },
     created(){
         let ct = this;
-        const url = " http://127.0.0.1:5000/api/v1/user";
+        const url = `${process.env.ROOT_API}/api/v1/user`;
         axios.get(url, ct.headers)
         .then(res=>{
           ct.user_data = res.data.user;
@@ -158,7 +166,7 @@ export default {
           console.log(err.response.data);
         })
 
-        axios.get('http://127.0.0.1:5000/api/v1/posts/bookmarked?page=1',ct.headers)
+        axios.get(`${process.env.ROOT_API}/api/v1/posts/bookmarked?page=1`,ct.headers)
         .then(res =>{
           ct.allPosts = res.data.bookmarked_posts;
           })
@@ -169,7 +177,7 @@ export default {
     methods:{
       getUserPosts(){
         let ct = this;
-        const url = "http://127.0.0.1:5000/api/v1/posts/user";
+        const url = `${process.env.ROOT_API}/api/v1/posts/user`;
         axios.get(url, ct.headers)
         .then(res=>{
           ct.allPosts = res.data.posts;
@@ -181,7 +189,7 @@ export default {
 
       saveEditedDetail(){
         let ct = this;
-        const url = "http://127.0.0.1:5000/api/v1/user/edit";
+        const url = `${process.env.ROOT_API}/api/v1/user/edit`;
         ct.loading = true;
         
         let formdata = new FormData();
@@ -215,7 +223,7 @@ export default {
 
       getBookmarkedPosts(){
         let ct = this;
-        axios.get('http://127.0.0.1:5000/api/v1/posts/bookmarked?page=1',ct.headers)
+        axios.get(`${process.env.ROOT_API}/api/v1/posts/bookmarked?page=1`,ct.headers)
         .then(res =>{
           ct.allPosts = res.data.bookmarked_posts;
           })
@@ -246,7 +254,7 @@ export default {
     height: auto;
     width: auto;
     max-width: 100%;
-    max-height: 250px;
+    max-height: 100%;
     display: block;
     margin: 0 auto !important;
 }

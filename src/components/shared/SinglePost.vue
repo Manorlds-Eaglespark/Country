@@ -6,7 +6,7 @@
             <v-img alt="" :src="post.poster_image"/>
           </v-avatar>
           <v-avatar v-else color="blue lighten-5" size="48">
-            <img src="../../assets/idea.svg" class="pa-1 account-image"/>
+            <img src="@/assets/idea.svg" class="pa-1 account-image"/>
           </v-avatar> &nbsp;
           <strong>{{post.poster_name}}</strong>
           <v-btn icon @click="showProfile = !showProfile">
@@ -20,13 +20,9 @@
         <template>
           <v-card flat class="mx-auto" max-width="100%">
             <img v-if="post.poster_image" :src="post.poster_image" class="mt-4 account-image"/>
-            <img v-else src="../../assets/idea.svg" class="mt-4 account-image"/>
-          
-              <v-card-title>{{post.poster_name}}</v-card-title>
-            </v-img>
-
-            <v-card-subtitle class="pb-0">About</v-card-subtitle>
-
+            <img v-else src="@/assets/idea.svg" class="mt-4 account-image"/>
+            <v-card-title>{{post.poster_name}}</v-card-title>
+            <v-card-subtitle class="pb-0">About:</v-card-subtitle>
             <v-card-text class="text--primary">
               <div>{{post.poster_about}}</div>
             </v-card-text>
@@ -75,15 +71,7 @@
                 <v-card class="pa-0" tile elevation="0">
                   <v-btn text class="full-size" @click.prevent="bookmark_post">
                     <v-icon :color="getBookmarkedColor">mdi-bookmark-outline</v-icon>
-                    <span class="d-none d-md-flex d-lg-none"> Bookmark</span>
-                  </v-btn>
-                </v-card>
-              </v-col>
-              <v-col>
-                <v-card class="pa-0" tile elevation="0">
-                  <v-btn text class="full-size">
-                    <v-icon outline color="grey darken-2">mdi-share-outline</v-icon>
-                    <span class="d-none d-md-flex d-lg-none"> Share</span>
+                    <span   class="d-none d-md-flex d-lg-none"> Bookmark</span>
                   </v-btn>
                 </v-card>
               </v-col>
@@ -197,7 +185,7 @@ export default {
         show_comments(){
           let ct = this;
           ct.showComments = !ct.showComments;
-          var url = 'http://127.0.0.1:5000/api/v1/comments/post/'+ct.postId;
+          var url = `${process.env.ROOT_API}/api/v1/comments/post/`+ct.postId;
           axios.get(url, ct.headers)
           .then(res=>{
             ct.items = res.data.comments;
@@ -210,7 +198,7 @@ export default {
       
         like_post(){
             var cntxt = this;
-            var url = 'http://127.0.0.1:5000/api/v1/likes/post/'+cntxt.postId
+            var url = `${process.env.ROOT_API}/api/v1/likes/post/`+cntxt.postId
             axios.post(url,{}, cntxt.headers)
             .then((response)=>{
 
@@ -240,7 +228,7 @@ export default {
 
    bookmark_post(){
      let bk_context = this;
-     var url = 'http://127.0.0.1:5000/api/v1/bookmarks/posts/'+bk_context.postId
+     var url = `${process.env.ROOT_API}/api/v1/bookmarks/posts/`+bk_context.postId
             axios.post(url,{}, bk_context.headers)
             .then((response)=>{
               bk_context.bookmarked = !bk_context.bookmarked
@@ -307,7 +295,7 @@ export default {
     color: #333;
 }
 .account-image{
-  width: auto;
+  width: 100%;
   height: auto;
   max-width: 100%;
   max-height: 100%;

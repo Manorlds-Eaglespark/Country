@@ -30,7 +30,7 @@
 
 <script>
 import axios from 'axios'
-import SingleComment from './SingleComment.vue'
+import SingleComment from '@/components/shared/SingleComment.vue'
 
   export default {
     components:{SingleComment},
@@ -54,14 +54,13 @@ import SingleComment from './SingleComment.vue'
     methods: {
       submitComment(){
         let ct = this;
-        const url = 'http://127.0.0.1:5000/api/v1/comments/post/'+ct.postId;
+        const url = `${process.env.ROOT_API}/api/v1/comments/post/`+ct.postId;
         const data = {'message':ct.commentMessage};
         axios.post(url, data, ct.headers)
         .then(res=>{
           ct.snackBar = true;
           ct.snackbarText = res.data.message;
           ct.$emit("changeMsg");
-          console.log("I have emitted the snackbar message!");
         })
         .catch(err=>{
           ct.snackBar = true;
@@ -83,7 +82,7 @@ import SingleComment from './SingleComment.vue'
         text-align: right;
     }
     .fix-height{
-      height: 250px !important;
+      height: 350px !important;
       overflow: scroll;
     }
 </style>

@@ -16,6 +16,11 @@
       <v-icon>fa fa-search</v-icon>
     </v-btn>
 
+        <v-btn @click="open_page('/ads')">
+      <span class="d-none d-md-flex d-lg-none">Shop</span>
+      <v-icon>fa fa-shopping-cart</v-icon>
+    </v-btn>
+
     <v-btn @click="open_page('/account')">
       <span class="d-none d-md-flex d-lg-none">Account</span>
       <v-icon>mdi-account</v-icon>
@@ -24,9 +29,8 @@
 </template>
 
 
-
 <script>
-import router from '../../router'
+import router from '@/router'
   export default {
     data () {
       return {

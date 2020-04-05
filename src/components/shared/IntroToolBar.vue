@@ -1,11 +1,11 @@
 <template>
 <div>
-    <v-app-bar dense dark fixed color="primary">
+    <v-app-bar dark fixed color="primary">
       <v-btn icon @click="openPage('/')">
         <v-icon v-if="showBack">mdi-arrow-left</v-icon>
       </v-btn>
       
-      <v-app-bar-nav-icon><img src="../../assets/logo.png" /></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon><img src="@/assets/logo.png" /></v-app-bar-nav-icon>
       <v-toolbar-title>Countalk</v-toolbar-title>
     </v-app-bar>
     <br/> <br/>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import router from '../../router'
+import router from '@/router'
 export default {
     props: ["showBack"],
     methods: {

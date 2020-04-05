@@ -3,15 +3,7 @@
     <IntroToolBar v-bind:showBack="showBack"></IntroToolBar>
     <v-card flat>
         <img width="100%" src="../assets/countries.jpg"/>    
-        <v-card-title>
-            <v-icon>
-                fa fa-globe
-            </v-icon> &nbsp;
-            Countalk Sign-up
-        </v-card-title>
-        <div class="grey--text ml-4">
-            #1 Global Country Chat
-        </div>
+    
         <div class="text-center">
             <v-snackbar v-model="snackbar" :multi-line="multiLine">
                 {{ snackbar_text }}
@@ -22,7 +14,8 @@
         </div>
         <v-row align="center">
             <v-col class="col-10 offset-1" max-width="100%">
-                <v-form ref="form" width="100%" v-model="valid" @submit="register_user">
+                <v-card-body text class="mt-2 mb-10 title">  Sign-up </v-card-body>
+                <v-form class="mt-4" ref="form" width="100%" v-model="valid" @submit="register_user">
                     <v-select v-model="select" :items="countries" :rules="[v => !!v || 'Country is required']" label="Select Your Country" required></v-select>
                     <v-text-field v-model="name" :rules="nameRules" label="Name" required></v-text-field>
                     <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
@@ -30,8 +23,8 @@
                     <v-text-field v-model="confirm_password" label="Confirm Password" type="password" required></v-text-field>
                     <v-row>
                         <v-col cols="mx-12" offset="8">
-                        <v-btn :loading="loading" color="success" type="submit">
-                            Signup
+                        <v-btn large text outlined :loading="loading" color="purple lighten-2" type="submit">
+                            Save
                         </v-btn>
                         </v-col>
                     </v-row>
@@ -346,7 +339,7 @@ import Footer from '@/components/shared/Footer.vue'
             ct.loading=false; 
         }
         else{
-            const url = 'http://127.0.0.1:5000/api/v1/user/register'
+            const url = `${process.env.ROOT_API}/api/v1/user/register`
             axios.post(url, {   
                 country: ct.select,
                 name: ct.name,

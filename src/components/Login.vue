@@ -9,9 +9,7 @@
     <img
       width="100%"
        src="../assets/countries.jpg"
-    />    
-    <v-card-title><v-icon>fa fa-globe</v-icon> Countalk Signin</v-card-title>
-    <div class="grey--text ml-4">#1 Global Country Chat</div>
+    />
         <div class="text-center">
           <v-snackbar
             v-model="snackbar"
@@ -29,8 +27,10 @@
         </div>
         <v-row align="center">
             <v-col class="col-10 offset-1" max-width="100%">
+                <v-card-text text class="title">Sign-in </v-card-text>
             <v-form
             ref="form"
+            class="mt-4"
             width="100%"
             v-model="valid"
             @submit="login_user"
@@ -51,7 +51,9 @@
             <v-row>
               <v-col cols="mx-12" offset="8">
               <v-btn
-                  color="primary"
+                  color="purple lighten-2"
+                  text
+                  outlined
                   type="submit"
               >
                   Login
@@ -75,11 +77,12 @@
 
 <script>
 import axios from 'axios'
-import router from '../router'
+import router from '@/router'
 import IntroToolBar from '@/components/shared/IntroToolBar'
 import Footer from '@/components/shared/Footer.vue'
 
   export default {
+    name: "Login",
     components:{IntroToolBar, Footer},
     data: () => ({
       loading: false,
@@ -102,7 +105,7 @@ import Footer from '@/components/shared/Footer.vue'
           ct.snackbar_text = "Please enter an email and password"
         }
         else{
-          const url = 'http://127.0.0.1:5000/api/v1/user/login'
+          const url = `${process.env.ROOT_API}/api/v1/user/login`
           axios.post(url, {
             email: this.email,
             password: this.password

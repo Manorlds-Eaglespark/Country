@@ -4,8 +4,8 @@
         <v-form @submit.prevent="querySearch">
             <div class="my-2 question-header">
                 <v-text-field class="ml-4 my-0" v-model="search" :rules="searchRules" label="Search something .." required/>
-                <v-btn type="submit" elevation="0" color="white" class="mr-2 my-0 mt-3">
-                    <v-icon dark>fa fa-search</v-icon>
+                <v-btn large outlined type="submit" elevation="0" class="mr-2 my-0 mt-0">
+                    <v-icon>fa fa-search</v-icon>
                 </v-btn>
             </div>
         </v-form>
@@ -24,7 +24,7 @@
       </v-tab-item>
       <v-tab-item>
         <v-card flat>
-          <Post :posts="getPosts" :url="'http://127.0.0.1:5000/api/v1/search?page='"/>
+          <Post :posts="getPosts" :url="searchUrl"/>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -49,6 +49,7 @@ export default {
         searchActive: false,
         usersResultsNumber: 0,
         postsResultsNumber: 0,
+        searchUrl: `${process.env.ROOT_API}/api/v1/search?page=`,
         users: [],
         posts: [],
         tab:null,
@@ -83,7 +84,7 @@ export default {
                             'Authorization': localStorage.getItem('token'),
                         }
             };
-            const url = "http://127.0.0.1:5000/api/v1/search";
+            const url = `${process.env.ROOT_API}/api/v1/search`;
             axios.post(url, {"search": ct.search}, headers)
             .then(res => {
                 ct.searchActive = true;
@@ -111,4 +112,3 @@ export default {
     white-space: nowrap;
 }
 </style>
-

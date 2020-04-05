@@ -1,10 +1,10 @@
 <template>
   <div class="toolbar-main">
-    <v-app-bar color='primary' class="toolbar-main" dense fixed dark>
+    <v-app-bar color='primary' class="toolbar-main" fixed dark>
       <v-app-bar-nav-icon>
       <div>
             <v-btn icon color="primary" @click="openPage('/')" dark>
-              <img src="../../assets/logo.png" />
+              <img src="@/assets/logo.png" />
             </v-btn>
           </div>
       </v-app-bar-nav-icon>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import router from '../../router'
+import router from '@/router'
 export default {
   data:()=>({
     countryName: '',

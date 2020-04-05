@@ -1,7 +1,7 @@
 <template>
     <div>
         <ToolBar></ToolBar>
-        <Post :posts="posts" :url="'http://127.0.0.1:5000/api/v1/posts/country?page='"></Post>
+        <Post :posts="posts" :url="url"></Post>
         <div class="text-center">
           <v-snackbar
             v-model="snackbar"
@@ -37,11 +37,12 @@ export default {
         snackbar: false,
         multiLine: true,
         snackbar_text: '',
+        url: `${process.env.ROOT_API}/api/v1/posts/country?page=1`,
   }),
 
   created(){
       let ct = this;
-      axios.get('http://127.0.0.1:5000/api/v1/posts/country?page=1',
+      axios.get(ct.url,
       {
           headers:{
               'Content-Type': 'application/json',

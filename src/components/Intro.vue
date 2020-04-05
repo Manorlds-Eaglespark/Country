@@ -11,7 +11,7 @@
        src="@/assets/countries.jpg"
     />
 
-    <v-card-title><img src="@/assets/logo.png" alt=""/>  Countalk</v-card-title>
+    <v-card-title><img class="mx-1" src="@/assets/logo.png" alt=""/>Countalk</v-card-title>
 
     <v-card-text>
       <v-row
@@ -31,7 +31,7 @@
       </v-row>
 
       <div class="my-4 subtitle-1">
-        #1 • Global • Country • Chat
+        #1 • Global • Country • Mobile • Feed
       </div>
 
       <div>Join that conversation in your country. listen, contribute, share and be part of the conversations that shape your future together as a country.
@@ -55,30 +55,38 @@ Follow the latest News updates, Entertainment and national updates.</div>
     </v-card-text>
 
     <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn
-      outlined
-        color="primary"
-        text
-      >
-        FAQs
-      </v-btn>
-      <v-btn
-      outlined
-        color="deep-purple lighten-2"
-        text
-      >
-      <v-icon color="deep-purple lighten-2">mdi-share-variant</v-icon> 
-        Invite
-      </v-btn> 
-      <v-btn
-      outlined
-        color="deep-purple lighten-2"
-        text
-      ><v-icon color="deep-purple lighten-2">mdi-share-outline</v-icon> 
-        Share
-      </v-btn>
-      <v-spacer></v-spacer>
+      
+        <v-container>
+            <v-divider></v-divider>
+            <v-row no-gutters class="pt-2">
+              <v-col>
+                <v-card class="pa-0" tile elevation="0">
+                  <v-btn class="full-size body-1" text>
+                    <v-icon class="mx-1" color="deep-purple lighten-2">fa fa-info</v-icon>
+                    FAQs
+                  </v-btn>
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card class="pa-0" tile elevation="0">
+                  <v-btn text class="full-size">
+                    <v-icon class="mx-1" color="deep-purple lighten-2">mdi-share-variant</v-icon> 
+                    Invite
+                  </v-btn>
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card class="pa-0" tile elevation="0">
+                  <v-btn text class="full-size">
+                    <v-icon class="mx-1" color="deep-purple lighten-2">mdi-share-outline</v-icon> 
+                    Share
+                  </v-btn>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+
+
     </v-card-actions>
   </v-card>
   <Footer></Footer>

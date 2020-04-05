@@ -45,10 +45,11 @@
                 </v-card-text>
                 <v-card-actions>
                 <v-spacer></v-spacer>
-                    <v-btn color="orange" :loading="loading" outlined class= "mb-2 mr-4 subtitle-1 center-element" type="submit" text>
-                      Post 
-                    <v-icon outline color="orange">mdi-send-outline</v-icon>
-                    </v-btn>
+                <div class ma-4>
+                <v-btn :loading="loading" type="submit" class="mx-2" fab dark large color="purple lighten-2">
+                  <v-icon dark>mdi-send</v-icon>
+                </v-btn>
+                </div>
                 </v-card-actions>
             </v-form>
         </v-card>
@@ -111,7 +112,7 @@ export default {
         let ct = this;
         event.preventDefault()
         ct.loading = true;
-        const url = 'http://127.0.0.1:5000/api/v1/posts';
+        const url = `${process.env.ROOT_API}/api/v1/posts`;
         const headers = {
                   'headers':{
                               'Content-Type': 'application/json',
