@@ -18,7 +18,7 @@ export default {
 
   methods: {
     async accept() {
-      this.showUpgradeUI = false
+      this.showUpgradeUI = false;
       await this.$workbox.messageSW({ type: "SKIP_WAITING" });
     }
   },

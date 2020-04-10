@@ -1,19 +1,19 @@
 <template>
     <div>
-        <v-card class="mx-auto whole-card" flat outlined>
+        <v-card class="mx-auto whole-card my-2" flat>
             <div class="post-header">
                 <v-avatar color="purple lighten-5" size="48">
                     <span class="white--text headline"><v-icon>fa fa-user</v-icon></span>
                 </v-avatar> &nbsp;
                 <strong>{{user.name}}</strong>
-                <v-btn icon @click="showProfile = !showProfile">
+                <v-btn class="mx-6" icon @click="showProfile = !showProfile">
                     <v-icon>{{ showProfile ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
                 </v-btn>
             </div>
             <div v-show="showUserProfile">
                 <v-card flat class="mx-auto" max-width="100%">
-                    <img v-if="user.profile_img" :src="user.profile_img" class="mt-4 account-image"/>
-                    <img v-else src="@/assets/idea.svg" class="mt-4 account-image"/>
+                    <img v-if="user.profile_img" :src="user.profile_img" class="account-image"/>
+                    <img v-else src="@/assets/idea.svg" class="account-image"/>
                     <v-card-title>{{user.name}}</v-card-title>
                     <v-card-subtitle class="pb-0">About:</v-card-subtitle>
                     <v-card-text class="text--primary">
@@ -23,7 +23,6 @@
                 </v-card>
             </div>
         </v-card>
-    </br></br></br></br>
     </div>
 </template>
 
@@ -43,16 +42,12 @@ export default {
 
 <style>
     .post-header{
-        padding-top: 14px;
-        padding-left: 14px;
-        padding-right: 14px;
         width: 100%;
         display: inline-block;
         overflow: hidden;
     }
     .whole-card{
         width:98%;
-        margin-top: 14px;
         overflow: hidden;
     }
     .account-image{

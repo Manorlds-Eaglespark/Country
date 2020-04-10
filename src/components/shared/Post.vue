@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div  v-for="post in getPosts" :key="post.index" >
+    <div v-for="post in getPosts" :key="post.index" >
       <SinglePost :post = "post"/>
     </div>
   <template width="100%">

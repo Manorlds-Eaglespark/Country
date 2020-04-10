@@ -14,8 +14,8 @@
         </div>
         <v-row align="center">
             <v-col class="col-10 offset-1" max-width="100%">
-                <v-card-body text class="mt-2 mb-10 title">  Sign-up </v-card-body>
-                <v-form class="mt-4" ref="form" width="100%" v-model="valid" @submit="register_user">
+                <v-card-text class="mt-2 mb-5 title">  Sign-up </v-card-text>
+                <v-form class="mt-4" ref="form" width="100%" v-model="valid" @submit.prevent="register_user">
                     <v-select v-model="select" :items="countries" :rules="[v => !!v || 'Country is required']" label="Select Your Country" required></v-select>
                     <v-text-field v-model="name" :rules="nameRules" label="Name" required></v-text-field>
                     <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
@@ -23,8 +23,8 @@
                     <v-text-field v-model="confirm_password" label="Confirm Password" type="password" required></v-text-field>
                     <v-row>
                         <v-col cols="mx-12" offset="8">
-                        <v-btn large text outlined :loading="loading" color="purple lighten-2" type="submit">
-                            Save
+                        <v-btn large outlined :loading="loading" color="success" type="submit">
+                            Finish
                         </v-btn>
                         </v-col>
                     </v-row>
@@ -328,11 +328,12 @@ import Footer from '@/components/shared/Footer.vue'
       register_user(){
         let ct = this;
         ct.loading = true;
-        if(ct.name == '' || ct.select =='' || ct.email == '' || ct.password == '' ){
+        if(ct.name == '' || ct.select =='' || ct.email == '' || ct.password == '' || ct.confirm_password == '' ){
             ct.snackbar=true;
             ct.snackbar_text = "Kindly fill in required details.";
             ct.loading=false;
         }
+        
         if(ct.password != ct.confirm_password){
             ct.snackbar=true;
             ct.snackbar_text = "Your passwords are not matching.";

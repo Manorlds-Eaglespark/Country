@@ -1,5 +1,5 @@
 <template>
-  <div class="toolbar-main">
+  <div class="mb-4 toolbar-main">
     <v-app-bar color='primary' class="toolbar-main" fixed dark>
       <v-app-bar-nav-icon>
       <div>
@@ -8,10 +8,12 @@
             </v-btn>
           </div>
       </v-app-bar-nav-icon>
+      <span class="headline mr-2">Countalk</span>
       <v-toolbar-title>
           <img class="my-0 mx-2 pt-2" alt="" width="34px" :src="countryFlag"/>
         <span class="my-0 pb-2">{{countryName}}</span>
       </v-toolbar-title>
+      <v-spacer/>
     </v-app-bar>
     <br/>
     <br/>

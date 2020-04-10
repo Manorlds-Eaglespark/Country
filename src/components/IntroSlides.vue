@@ -15,14 +15,14 @@
                     </v-carousel-item>
                 </v-carousel>
                  <v-list two-line>
-      <v-list-item>
+      <v-list-item three-line>
         <v-list-item-avatar>
           <v-img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/President_Roosevelt_-_Pach_Bros.jpg/800px-President_Roosevelt_-_Pach_Bros.jpg"></v-img>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>Theodore Roosevelt</v-list-item-title>
           <v-list-item-subtitle>26th U.S. President</v-list-item-subtitle>
-          <v-list-item-body> <cite> Do what you can, with what you have, where you are.</cite></v-list-item-body>
+          <v-list-item-subtitle class="text--primary"><cite> Do what you can, with what you have, where you are.</cite></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -31,7 +31,7 @@
             <v-row no-gutters>
             <v-col>
                 <v-card class="ma-4 center-item" flat>
-                    <v-btn @click="openPage('/register')" color="purple lighten-2" large outlined text class="body-1 my-4"> Continue </v-btn>
+                    <v-btn @click.prevent="openPage('/register')" color="purple lighten-2" large outlined text class="body-1 my-4"> Continue </v-btn>
                 </v-card>
             </v-col>
             </v-row>
@@ -42,7 +42,7 @@
 <script>
 import IntroToolBar from '@/components/shared/IntroToolBar'
 import image1 from '@/assets/introSlide_1.jpg'
-import image2 from '@/assets/introSlide_2.png'
+import image2 from '@/assets/introSlide_2.jpg'
 import image3 from '@/assets/introSlide_3.jpg'
 import image4 from '@/assets/introSlide_4.jpg'
 import router from '@/router'

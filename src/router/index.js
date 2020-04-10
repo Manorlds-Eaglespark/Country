@@ -6,7 +6,7 @@ import Register from '@/components/Register'
 import IntroSlides from '@/components/IntroSlides'
 import Home from '@/components/Home'
 import Account from '@/components/Account'
-import Search from '@/components/Search'
+import Shop from '@/components/Shop'
 import NewPost from '@/components/NewPost'
 
 Vue.use(VueRouter)
@@ -27,7 +27,7 @@ Vue.use(VueRouter)
       component: Register
     }, 
     {
-      path: '/newPost',
+      path: '/post',
       name: 'NewPost',
       component: NewPost
     },
@@ -37,9 +37,9 @@ Vue.use(VueRouter)
       component: Home
     },
     {
-      path: '/search',
-      name: 'Search',
-      component: Search
+      path: '/shop',
+      name: 'Shop',
+      component: Shop
     },
     {
       path: '/account',

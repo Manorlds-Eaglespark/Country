@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="98%" flat class="fix-height mb-2">
+  <v-card max-width="98%" flat class="fix-height mx-2">
     <v-list three-line>
       <v-subheader v-text="header"></v-subheader>
       <template>

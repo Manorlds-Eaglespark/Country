@@ -9,8 +9,8 @@
                 <v-row>
                   <v-col>
                     <div class="container-padding">
-                        <v-avatar color="purple lighten-5">
-                        <v-icon>fa fa-user-circle</v-icon>
+                        <v-avatar color="blue lighten-5">
+                        <img src="@/assets/idea.svg" class="pa-1"/>
                         </v-avatar>
                         Share your mind ..
                     </div>
@@ -46,7 +46,7 @@
                 <v-card-actions>
                 <v-spacer></v-spacer>
                 <div class ma-4>
-                <v-btn :loading="loading" type="submit" class="mx-2" fab dark large color="purple lighten-2">
+                <v-btn :loading="loading" type="submit" class="mx-2" fab dark large color="primary">
                   <v-icon dark>mdi-send</v-icon>
                 </v-btn>
                 </div>

@@ -31,7 +31,7 @@
       </v-row>
 
       <div class="my-4 subtitle-1">
-        #1 • Global • Country • Mobile • Feed
+        #1 • Country • Mobile • Feed
       </div>
 
       <div>Join that conversation in your country. listen, contribute, share and be part of the conversations that shape your future together as a country.
@@ -47,9 +47,9 @@ Follow the latest News updates, Entertainment and national updates.</div>
         active-class="deep-purple accent-4 white--text"
         column
       >
-        <v-btn class="ma-2 success" @click="openPage('/introSlides')" color="white">Get Started</v-btn>
+        <v-btn class="ma-2 success" @click.prevent="openPage('/introSlides')" color="white">Get Started</v-btn>
         
-    <v-btn class="ma-2" @click="openPage('/login')" color="primary">Login</v-btn>
+    <v-btn class="ma-2" @click.prevent="openPage('/login')" color="primary">Login</v-btn>
 
       </v-chip-group>
     </v-card-text>
@@ -78,15 +78,13 @@ Follow the latest News updates, Entertainment and national updates.</div>
               <v-col>
                 <v-card class="pa-0" tile elevation="0">
                   <v-btn text class="full-size">
-                    <v-icon class="mx-1" color="deep-purple lighten-2">mdi-share-outline</v-icon> 
-                    Share
+                    <v-icon class="mx-1" color="deep-purple lighten-2">mdi-reply</v-icon> 
+                    Feedback
                   </v-btn>
                 </v-card>
               </v-col>
             </v-row>
           </v-container>
-
-
     </v-card-actions>
   </v-card>
   <Footer></Footer>
@@ -117,10 +115,6 @@ import Footer from '@/components/shared/Footer.vue'
 </script>
 
 <style>
-body{
-  text-decoration: none;
-  width: 100%;
-}
 .link-text{
   text-decoration: none;
 }
