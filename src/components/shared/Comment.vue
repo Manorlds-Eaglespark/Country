@@ -1,22 +1,39 @@
 <template>
-  <v-card max-width="98%" flat class="fix-height mx-2">
+  <v-card max-width="100%" flat class="fix-height">
     <v-list three-line>
       <v-subheader v-text="header"></v-subheader>
       <template>
+          <div v-show="showWhole">
       <form @submit.prevent="submitComment">
-        <div class="commentWidth px-3 mb-2">
+        <div class="commentWidth mx-2 mb-2">
             <v-text-field outlined label="Your Comment" v-model="commentMessage" :rules="rules" hide-details="auto"></v-text-field>
         </div>
-        <div class="full-width px-3 mb-3">
-            <v-btn elevation="0" type="submit">Comment</v-btn>
-          </div>
+          <v-row no-gutters class="pt-2 mb-4">
+              <v-col class="mx-4">
+                  <v-card class="pa-0" tile elevation="0">
+                      <v-btn @click="showWholeFlag = !showWholeFlag" color="primary" class="full-size text-capitalize" outlined :loading="save_feedback_loading"
+                      >
+                          Cancel
+                      </v-btn>
+                  </v-card>
+              </v-col>
+              <v-col class="mx-4">
+                  <v-card class="pa-0" tile elevation="0">
+                      <v-btn color="primary" class="full-size body-1 text-capitalize" lowercase--text Large :loading="save_feedback_loading"
+                             type="submit">
+                          Comment
+                      </v-btn>
+                  </v-card>
+              </v-col>
+          </v-row>
       </form>
+          </div>
     </template>
       <div class="commentWidth" v-for="(item, index) in items" :key="index">
           <SingleComment :item="item" :index="index"/>
       </div>
     </v-list>
-    
+
      <div class="text-center">
       <v-snackbar v-model="snackBar" :multi-line="multiLine">
         {{ snackbarText }}
@@ -26,6 +43,7 @@
       </v-snackbar>
     </div>
   </v-card>
+    </div>
 </template>
 
 <script>
@@ -39,6 +57,7 @@ import SingleComment from '@/components/shared/SingleComment.vue'
         header: 'Comments',
         multiLine: true,
         snackBar: false,
+        showWholeFlag: true,
         snackbarText:'',
         rules: [
         value => !!value || 'Comment required before submit.',
@@ -51,6 +70,11 @@ import SingleComment from '@/components/shared/SingleComment.vue'
                     }
         },
     }),
+      computed:{
+          showWhole(){
+              return this.showWholeFlag;
+          },
+      },
     methods: {
       submitComment(){
         let ct = this;
@@ -82,7 +106,7 @@ import SingleComment from '@/components/shared/SingleComment.vue'
         text-align: right;
     }
     .fix-height{
-      height: 350px !important;
+      height: 360px !important;
       overflow: scroll;
     }
 </style>

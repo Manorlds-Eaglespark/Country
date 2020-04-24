@@ -1,6 +1,6 @@
 <template>
   <div class="mb-4 toolbar-main">
-    <v-app-bar color='primary' class="toolbar-main" fixed dark>
+    <v-app-bar color='primary' flat class="toolbar-main" fixed dark>
       <v-app-bar-nav-icon>
       <div>
             <v-btn icon color="primary" @click="openPage('/')" dark>
@@ -11,9 +11,8 @@
       <span class="headline mr-2">Countalk</span>
       <v-toolbar-title>
           <img class="my-0 mx-2 pt-2" alt="" width="34px" :src="countryFlag"/>
-        <span class="my-0 pb-2">{{countryName}}</span>
+        <span class="my-0 pb-2 body-1">{{countryName}}</span>
       </v-toolbar-title>
-      <v-spacer/>
     </v-app-bar>
     <br/>
     <br/>
@@ -29,13 +28,14 @@ export default {
 
   }),
   created(){
-    this.countryName = localStorage.getItem('countryName')
-    this.countryFlag = localStorage.getItem('FlagUrl')
+    const country = JSON.parse(localStorage.getItem('country'));
+    this.countryName = country.name
+    this.countryFlag = country.flag;
   },
   methods:{
     openPage: function (go_to_link) {
       router.push(go_to_link)
-    }
+    },
   }
 }
 </script>

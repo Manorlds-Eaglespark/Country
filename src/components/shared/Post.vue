@@ -1,13 +1,14 @@
 <template>
   <div>
+      <div v-if="posts.length > 0">
     <div v-for="post in getPosts" :key="post.index" >
       <SinglePost :post = "post"/>
     </div>
-  <template width="100%">
-  <v-container class="grey lighten-5">
+  <template>
+  <v-container class="my-2">
     <v-row no-gutters>
       <v-col>
-        <v-card class="pa-0" tile elevation="0">
+        <v-card flat class="pa-0" tile elevation="0">
           <v-btn text class="full-size" @click="getMorePosts(true)">
                     <v-icon outline color="teal">mdi-refresh</v-icon>
                     <span class="d-none d-md-flex d-lg-none"> Refresh</span>
@@ -18,7 +19,7 @@
         <v-card tile flat class="pa-0" outlined elevation="0">
           <v-btn text class="full-size" @click="getMorePosts(false)">
                     <v-icon outlined color="teal">fa fa-caret-down</v-icon>
-                    <span class="d-none d-md-flex d-lg-none" style="color:teal">&nbsp;More</span>
+                    <span class="" style="color:teal">&nbsp; &nbsp;More</span>
                   </v-btn>
         </v-card>
       </v-col>
@@ -33,6 +34,9 @@
         </v-btn>
       </v-snackbar>
     </div>
+  </div>
+      <div v-else class="pa-4 align-content-center">
+      </div>
   </div>
 </template>
 
@@ -49,7 +53,7 @@ export default {
         morePressed: false,
         snackbarText:'',
         pagePosts: [],
-        page: 1,
+        thisPage: 1,
     }),
 
 
@@ -63,8 +67,11 @@ export default {
       getMorePosts(refreshStatus){
         let ct = this;
         ct.morePressed = true;
-        ct.page = refreshStatus ? 1 : ct.page + 1;
-        axios.get( ct.url + ct.page,
+        console.log("-----current page + 1 ---------: "+ (ct.thisPage + 1));
+        ct.thisPage = refreshStatus ? 1 : (ct.thisPage + 1);
+          console.log("this is the current page:   ----: "+ct.thisPage);
+          console.log("this is the url:   ----: "+ct.url);
+        axios.get( ct.url + ct.thisPage,
           {
             headers:{
                 'Content-Type': 'application/json',
