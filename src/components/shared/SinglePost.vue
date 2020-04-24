@@ -1,14 +1,14 @@
 <template>
-    <div class="mx-2">
+    <div class="mx-2 my-2">
         <v-card class="mx-auto my-2 whole-card" flat outlined>
             <div class="post-header">
-                <v-avatar v-if="post.poster_image" size="48">
-                    <v-img alt="" :src="post.poster_image"/>
+                <v-avatar v-if="post.poster.profile_img" size="62">
+                    <v-img alt="" :src="post.poster.profile_img"/>
                 </v-avatar>
-                <v-avatar v-else color="blue lighten-5" size="48">
+                <v-avatar v-else color="blue lighten-5" size="62">
                     <img src="@/assets/idea.svg" class="pa-1 account-image"/>
                 </v-avatar> &nbsp;
-                <strong>{{post.poster_name}}</strong>
+                <span class="mx-2"><strong>{{post.poster.name}}</strong></span>
                 <v-btn class="mx-2" icon @click="showProfile = !showProfile">
                     <v-icon>{{ showProfile ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
                 </v-btn>
@@ -20,48 +20,49 @@
             <div v-show="showUserProfile">
                 <template>
                     <v-card flat class="mx-auto" max-width="100%">
-                        <img v-if="post.poster_image" :src="post.poster_image" class="mt-4 account-image"/>
+                        <img v-if="post.poster.profile_img" :src="post.poster.profile_img" class="mt-4 account-image"/>
                         <img v-else src="@/assets/idea.svg" class="mt-4 account-image"/>
-                        <v-card-title>{{post.poster_name}}</v-card-title>
+                        <v-card-title>{{post.poster.name}}</v-card-title>
                         <v-card-subtitle class="pb-0">About:</v-card-subtitle>
                         <v-card-text class="text--primary">
-                            <div>{{post.poster_about}}</div>
+                            <div>{{post.poster.about}}</div>
                         </v-card-text>
                         <v-divider/>
                     </v-card>
                 </template>
             </div>
 
-            <v-card-text class="pt-3 pb-0 text--primary">
+            <v-card-text class="pa-4 mx-2 text--primary">
                 <p class="title font-weight-regular text-color-black">{{post.message}}</p>
             </v-card-text>
-
-            <div class="img-container">
-                <div v-show="imagesOnPost">
-                    <div v-if="moreThanOneImage">
-                        <vue-images :imgs="images" :showthumbnails="true" :modalclose="true" :mousescroll="true"
-                                    :showclosebutton="true" :keyinput="true"/>
-                    </div>
-                    <v-img v-else :src="getFirstImage" contain></v-img>
+            <div v-show="imagesOnPost" class="img-container">
+                <div v-if="moreThanOneImage">
+                    <vue-images :imgs="images" :showthumbnails="true" :modalclose="true" :mousescroll="true"
+                                :showclosebutton="true" :keyinput="true"/>
                 </div>
+                <v-img v-else :src="getFirstImage" contain></v-img>
             </div>
             <div>
+                <div v-if="tags" class="mx-2 font-weight-medium">
+                    <span v-for="(tag, index) in tags" :key="index">
+                        <span class="mx-1 title">#{{tag}}</span>
+                    </span>
+                </div>
                 <v-container>
                     <v-divider></v-divider>
                     <v-row no-gutters class="pt-2">
                         <v-col>
                             <v-card class="pa-0" tile elevation="0">
-                                <v-btn @click.prevent='()=>like_post()' class="full-size body-1" text>
+                                <v-btn @click.prevent="like_post" :loading="likeLoading" class="full-size body-1" text>
                                     {{(getLikes > 0)?getLikes:''}}
-                                    <v-icon v-if='likeActive' color="orange">mdi-thumb-up-outline</v-icon>
-                                    <v-icon v-else color="grey darken-2">mdi-thumb-up-outline</v-icon>
+                                    <v-icon :color="getLikeColor">mdi-thumb-up-outline</v-icon>
                                     <span class="d-none d-md-flex d-lg-none"> {{getLikeWord?'Likes' : 'Like'}}</span>
                                 </v-btn>
                             </v-card>
                         </v-col>
                         <v-col>
                             <v-card class="pa-0" tile elevation="0">
-                                <v-btn text class="full-size" @click.prevent="show_comments">
+                                <v-btn :loading="commentsLoading" text class="full-size" @click.prevent="show_comments">
                                     {{(getCommentsCount > 0)?getCommentsCount:''}}
                                     <v-icon color="grey darken-2">mdi-comment-outline</v-icon>
                                     <span class="d-none d-md-flex d-lg-none"> {{getCommentWord?'Comments' : 'Comment'}}</span>
@@ -70,7 +71,7 @@
                         </v-col>
                         <v-col>
                             <v-card class="pa-0" tile elevation="0">
-                                <v-btn text class="full-size" @click.prevent="bookmark_post">
+                                <v-btn :loading="bookmarkLoading" text class="full-size" @click.prevent="bookmark_post">
                                     <v-icon :color="getBookmarkedColor">mdi-bookmark-outline</v-icon>
                                     <span class="d-none d-md-flex d-lg-none"> Bookmark</span>
                                 </v-btn>
@@ -105,14 +106,17 @@
         components: {TimeAgo, Comment, vueImages},
         data: () => ({
             liked: true,
-            longString: true,
+            tags: [],
+            longString: false,
             showProfile: false,
             isActive: true,
+            likeLoading: false,
+            bookmarkLoading: false,
+            commentsLoading: false,
             bookmarked: false,
             likeCount: 0,
             commentsCount: 0,
             likePlural: null,
-            commentPlural: null,
             commentPlural: false,
             locale: "en",
             tooltip: false,
@@ -133,6 +137,7 @@
             },
         }),
         created() {
+            this.tags = this.post.tags ? this.post.tags.split("_+_") : '';
             this.isActive = this.post.liked;
             this.likeCount = this.post.likes;
             this.images = this.post.images;
@@ -177,6 +182,9 @@
             },
             getBookmarkedColor() {
                 return this.bookmarked ? "orange" : "grey darken-3";
+            },
+            getLikeColor() {
+                return this.likeActive ? "orange" : "grey darken-3";
             }
         },
 
@@ -187,56 +195,60 @@
             },
             show_comments() {
                 let ct = this;
+                ct.commentsLoading = true;
                 ct.showComments = !ct.showComments;
-                var url = `${process.env.ROOT_API}/api/v1/comments/post/` + ct.postId;
+                let url = `${process.env.ROOT_API}/api/v1/comments/post/` + ct.postId;
                 axios.get(url, ct.headers)
                     .then(res => {
+                        ct.commentsLoading = false;
                         ct.items = res.data.comments;
                     })
                     .catch(err => {
+                        ct.commentsLoading = false;
                         ct.snackBar = true;
                         ct.snackbarText = err.response.data.error;
                     })
             },
 
             like_post() {
-                var cntxt = this;
-                var url = `${process.env.ROOT_API}/api/v1/likes/post/` + cntxt.postId
-                axios.post(url, {}, cntxt.headers)
+                let ct = this;
+                ct.likeLoading = true;
+                const url = `${process.env.ROOT_API}/api/v1/likes/post/` + ct.postId
+                axios.post(url, {}, ct.headers)
                     .then((response) => {
-
-                        if (cntxt.likeCount > 1) {
-                            cntxt.likePlural = true;
+                        ct.likeLoading = false;
+                        ct.likePlural = ct.likeCount > 1;
+                        if (ct.isActive) {
+                            ct.likeCount = ct.likeCount - 1
+                            ct.likePlural = ct.likeCount > 1
+                            ct.isActive = false;
                         } else {
-                            cntxt.likePlural = false;
-                        }
-                        if (cntxt.isActive) {
-                            cntxt.likeCount = cntxt.likeCount - 1
-                            cntxt.likePlural = cntxt.likeCount > 1 ? true : false
-                            cntxt.isActive = false;
-                        } else {
-                            cntxt.likeCount = cntxt.likeCount + 1
-                            cntxt.isActive = true;
-                            cntxt.likePlural = cntxt.likeCount > 1 ? true : false
+                            ct.likeCount = ct.likeCount + 1
+                            ct.isActive = true;
+                            ct.likePlural = ct.likeCount > 1
                         }
 
                     })
                     .catch((error) => {
-                        cntxt.snackBar = true;
-                        cntxt.snackbarText = error.response.data.error;
+                        ct.likeLoading = false;
+                        ct.snackBar = true;
+                        ct.snackbarText = error.response.data.error;
                     })
             },
 
             bookmark_post() {
                 let bk_context = this;
-                var url = `${process.env.ROOT_API}/api/v1/bookmarks/posts/` + bk_context.postId
+                bk_context.bookmarkLoading = true;
+                const url = `${process.env.ROOT_API}/api/v1/bookmarks/posts/` + bk_context.postId
                 axios.post(url, {}, bk_context.headers)
                     .then((response) => {
+                        bk_context.bookmarkLoading = false;
                         bk_context.bookmarked = !bk_context.bookmarked
                         bk_context.snackBar = true;
                         bk_context.snackbarText = response.data.message;
                     })
                     .catch((error) => {
+                        bk_context.bookmarkLoading = false;
                         bk_context.snackBar = true;
                         bk_context.snackbarText = error.response.data.error;
                     })
@@ -262,7 +274,7 @@
         text-align: center;
         overflow: hidden;
         max-width: 100%;
-        padding: 0px;
+        padding: 0;
     }
 
     .post-header {

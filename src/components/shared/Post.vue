@@ -1,13 +1,14 @@
 <template>
   <div>
+      <div v-if="posts.length > 0">
     <div v-for="post in getPosts" :key="post.index" >
       <SinglePost :post = "post"/>
     </div>
-  <template width="100%">
-  <v-container class="grey lighten-5">
+  <template>
+  <v-container class="my-2">
     <v-row no-gutters>
       <v-col>
-        <v-card class="pa-0" tile elevation="0">
+        <v-card flat class="pa-0" tile elevation="0">
           <v-btn text class="full-size" @click="getMorePosts(true)">
                     <v-icon outline color="teal">mdi-refresh</v-icon>
                     <span class="d-none d-md-flex d-lg-none"> Refresh</span>
@@ -33,6 +34,9 @@
         </v-btn>
       </v-snackbar>
     </div>
+  </div>
+      <div v-else class="pa-4 align-content-center">
+      </div>
   </div>
 </template>
 

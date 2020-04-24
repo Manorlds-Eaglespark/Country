@@ -1,8 +1,8 @@
 <template>
   <v-app id="inspire">
         <IntroToolBar v-bind:showBack="showBack"/>
-                <v-carousel delimiter-icon="mdi-minus" :continuous="false" progress-color="purple lighten-2" :interval="3000" :cycle="true" :show-arrows="false" :show-progres=true>
-                    <v-carousel-item 
+                <v-carousel delimiter-icon="mdi-minus" :continuous="false" progress-color="primary" :interval="3000" :cycle="true" :show-arrows="false" :show-progres=true>
+                    <v-carousel-item
                         v-for="(item,i) in slideImages"
                         :key="i"
                         :src="item.src"
@@ -28,13 +28,24 @@
     </v-list>
         <v-container>
           <v-divider></v-divider>
-            <v-row no-gutters>
-            <v-col>
-                <v-card class="ma-4 center-item" flat>
-                    <v-btn @click.prevent="openPage('/register')" color="purple lighten-2" large outlined text class="body-1 my-4"> Continue </v-btn>
-                </v-card>
-            </v-col>
-            </v-row>
+                <v-row no-gutters class="ma-4">
+                    <v-col>
+                        <v-card class="pa-0 ma-2" tile elevation="0">
+                            <v-btn @click.prevent="openPage('/')" large class="full-size text-capitalize" outlined
+                            >
+                                back
+                            </v-btn>
+                        </v-card>
+                    </v-col>
+                    <v-col>
+                        <v-card class="pa-0 ma-2" tile elevation="0">
+                            <v-btn color="success" class="full-size body-1 text-capitalize body-1" lowercase--text large
+                                   @click.prevent="openPage('/register')">
+                                Continue
+                            </v-btn>
+                        </v-card>
+                    </v-col>
+                </v-row>
         </v-container>
 </v-app>
 </template>
@@ -54,7 +65,7 @@ import router from '@/router'
       showBack: true,
         cycle: false,
         slideImages: [
-            { 
+            {
                 src: image1,
                 text: "Welcome to Countalk"
             },
@@ -99,7 +110,7 @@ import router from '@/router'
     /* margin: 0 auto !important; */
     text-align:center;
     margin-top: 70%;
-    background-color: rgba(255, 255, 255, 0.5); 
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .full-size{

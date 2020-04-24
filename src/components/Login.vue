@@ -11,20 +11,28 @@
           </v-btn>
         </v-snackbar>
       </div>
-      
-      <v-form ref="form" class="mt-4" width="100%" v-model="valid" @submit.prevent="login_user">
+
+      <v-form ref="form" class="mt-4 mx-6" width="100%" v-model="valid" @submit.prevent="login_user">
         <v-row align="center">
-          <v-col class="col-10 offset-1" max-width="100%">
+          <v-col max-width="100%">
             <v-card-text text class="title">Sign-in </v-card-text>
-            <v-text-field v-model="email" label="E-mail" required/>
-            <v-text-field v-model="password" label="Password" type="password" required/>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="mx-12" offset="8">
-            <v-btn color="primary" outlined lowercase--text Large :loading="loading" type="submit">
-              Login
-            </v-btn>
+            <v-text-field v-model="email" outlined label="E-mail" required/>
+            <v-text-field v-model="password" outlined label="Password" type="password" required/>
+            <v-row no-gutters>
+              <v-col>
+                <v-card class="pa-0" tile elevation="0">
+                  <v-spacer/>
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card class="pa-0" tile elevation="0">
+                  <v-btn color="primary" class="full-size body-1 text-capitalize" lowercase--text large :loading="loading"
+                         type="submit">
+                    Login
+                  </v-btn>
+                </v-card>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-form>
@@ -61,17 +69,16 @@ import Footer from '@/components/shared/Footer.vue'
    }),
 
     methods: {
-      login_user(e){
+      login_user(){
         let ct = this;
-        e.preventDefault();
         ct.loading = true
-        if(ct.password == '' || ct.email == ''){
+        if(ct.password === '' || ct.email === ''){
           ct.snackbar=true
-          ct.snackbar_text = "Please enter an email and password"
+          ct.snackbar_text = "Please enter an email and password";
           ct.loading = false;
         }
         else{
-          const url = `${process.env.ROOT_API}/api/v1/user/login`
+          const url = `${process.env.ROOT_API}/api/v1/user/login`;
           axios.post(url, {
             email: this.email,
             password: this.password
@@ -79,20 +86,19 @@ import Footer from '@/components/shared/Footer.vue'
             { headers: { 'Content-Type': 'application/json'}},
             )
           .then(function (response) {
-            ct.snackbar=true
-            ct.loading = false
-            ct.snackbar_text = response.data.message
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('countryId', response.data.country_id);
-            localStorage.setItem('countryName', response.data.country_name);
-            localStorage.setItem('FlagUrl', response.data.country_flag);
-            localStorage.setItem('shopOwner', response.data.shopOwner);
+            ct.snackbar=true;
+            ct.loading = false;
+            ct.snackbar_text = response.data.message;
+            localStorage.setItem('token', `Bearer ${response.data.token}`);
+            localStorage.setItem('countryId', response.data.country.id);
+            localStorage.setItem('countryName', response.data.country.name);
+            localStorage.setItem('FlagUrl', response.data.country.flag);
             router.push("/home");
             })
           .catch(function (error) {
-            ct.snackbar=true
-            ct.loading = false
-            ct.snackbar_text = error.response.data.error
+            ct.snackbar=true;
+            ct.loading = false;
+            ct.snackbar_text = error.response.data.error;
           });
         }
       }
@@ -104,6 +110,10 @@ import Footer from '@/components/shared/Footer.vue'
 <style>
 body{
   text-decoration: none;
+  width: 100%;
+  height: 100%;
+}
+.full-size {
   width: 100%;
   height: 100%;
 }

@@ -1,24 +1,19 @@
 <template>
-  <v-bottom-navigation :value="activeBtn" grow color="teal" fixed>
+  <v-bottom-navigation flat height="48" width="100%" max-width="100%" :value="activeBtn" grow color="grey" fixed>
 
-    <v-btn @click="open_page('/home')">
+    <v-btn color="primary" @click="open_page('/home')">
       <span class="d-none d-md-flex d-lg-none">Home</span>
-      <v-icon size="36">mdi-timeline-outline</v-icon>
+      <v-icon color="white darken 4" size="32">mdi-timeline-outline</v-icon>
     </v-btn>
 
-    <v-btn  @click="open_page('/post')">
+    <v-btn color="primary"  @click="open_page('/post')">
       <span class="d-none d-md-flex d-lg-none">Post</span>
-      <v-icon size="36">mdi-plus-circle-outline</v-icon>
+      <v-icon color="white" size="32">mdi-send-circle-outline</v-icon>
     </v-btn>
 
-    <v-btn @click="open_page('/shop')">
-      <span class="d-none d-md-flex d-lg-none">Shop</span>
-      <v-icon size="36">fa fa-opencart</v-icon>
-    </v-btn>
-
-    <v-btn @click="open_page('/account')">
+    <v-btn color="primary" @click="open_page('/account')">
       <span class="d-none d-md-flex d-lg-none">Account</span>
-      <v-icon size="36">mdi-account-outline</v-icon>
+      <v-icon color="white" size="32">mdi-account-outline</v-icon>
     </v-btn>
   </v-bottom-navigation>
 </template>

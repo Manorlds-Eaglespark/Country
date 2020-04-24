@@ -2,8 +2,8 @@
 <div>
     <IntroToolBar v-bind:showBack="showBack"></IntroToolBar>
     <v-card flat>
-        <img width="100%" src="../assets/countries.jpg"/>    
-    
+        <img width="100%" src="../assets/countries.jpg"/>
+
         <div class="text-center">
             <v-snackbar v-model="snackbar" :multi-line="multiLine">
                 {{ snackbar_text }}
@@ -12,20 +12,30 @@
             </v-btn>
           </v-snackbar>
         </div>
-        <v-row align="center">
-            <v-col class="col-10 offset-1" max-width="100%">
-                <v-card-text class="mt-2 mb-5 title">  Sign-up </v-card-text>
+        <v-row align="center" class="mx-4">
+            <v-col max-width="100%">
+                <v-card-text class="mt-2 mb-5 title">Sign-up</v-card-text>
                 <v-form class="mt-4" ref="form" width="100%" v-model="valid" @submit.prevent="register_user">
-                    <v-select v-model="select" :items="countries" :rules="[v => !!v || 'Country is required']" label="Select Your Country" required></v-select>
+                    <v-select outlined v-model="selectCountry" :items="countries" :rules="[v => !!v || 'Country is required']" label="Select Your Country" required></v-select>
                     <v-text-field v-model="name" :rules="nameRules" label="Name" required></v-text-field>
                     <v-text-field v-model="email" label="Email" :rules="emailRules" required></v-text-field>
                     <v-text-field v-model="password" :rules="passwordRules" label="Password" type="password" required></v-text-field>
                     <v-text-field v-model="confirm_password" label="Confirm Password" type="password" required></v-text-field>
-                    <v-row>
-                        <v-col cols="mx-12" offset="8">
-                        <v-btn large outlined :loading="loading" color="success" type="submit">
-                            Finish
-                        </v-btn>
+                    <v-row no-gutters>
+                        <v-col>
+                            <v-card class="pa-0 ma-2" tile elevation="0">
+                                <v-btn @click.prevent="openPage('/')" large class="full-size text-capitalize" outlined>
+                                    Cancel
+                                </v-btn>
+                            </v-card>
+                        </v-col>
+                        <v-col>
+                            <v-card class="pa-0 ma-2" tile elevation="0">
+                                <v-btn color="success" type="submit" class="full-size body-1 text-capitalize body-1" lowercase--text large
+                                       :loading="loading">
+                                    Finish
+                                </v-btn>
+                            </v-card>
                         </v-col>
                     </v-row>
                 </v-form>
@@ -40,9 +50,9 @@
 
 <script>
 import axios from 'axios'
-import router from '../router'
 import IntroToolBar from '@/components/shared/IntroToolBar'
 import Footer from '@/components/shared/Footer.vue'
+import router from '@/router'
 
   export default {
     components:{Footer, IntroToolBar},
@@ -62,7 +72,7 @@ import Footer from '@/components/shared/Footer.vue'
         ],
         confirm_password: '',
         email: '',
-        select: '',
+        selectCountry: '',
         countries: [
             "Afghanistan",
             "Åland Islands",
@@ -325,24 +335,26 @@ import Footer from '@/components/shared/Footer.vue'
    }),
 
     methods: {
+        openPage: function(pageLink){
+            router.push(pageLink)
+        },
       register_user(){
         let ct = this;
         ct.loading = true;
-        if(ct.name == '' || ct.select =='' || ct.email == '' || ct.password == '' || ct.confirm_password == '' ){
+        if(ct.name === '' || ct.selectCountry ==='' || ct.email === '' || ct.password === '' || ct.confirm_password === '' ){
             ct.snackbar=true;
-            ct.snackbar_text = "Kindly fill in required details.";
+            ct.snackbar_text = "Fill in all details";
             ct.loading=false;
         }
-        
-        if(ct.password != ct.confirm_password){
+        if(ct.password !== ct.confirm_password){
             ct.snackbar=true;
             ct.snackbar_text = "Your passwords are not matching.";
-            ct.loading=false; 
+            ct.loading=false;
         }
         else{
             const url = `${process.env.ROOT_API}/api/v1/user/register`
-            axios.post(url, {   
-                country: ct.select,
+            axios.post(url, {
+                country: this.countries.indexOf(this.selectCountry) + 1,
                 name: ct.name,
                 email: ct.email,
                 password: ct.password
@@ -370,5 +382,9 @@ import Footer from '@/components/shared/Footer.vue'
 <style>
   body{
     width: 100%;
+  }
+  .full-size {
+      width: 100%;
+      height: 100%;
   }
 </style>

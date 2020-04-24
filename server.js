@@ -28,7 +28,7 @@ app.get(/.*/, function (req, res) {
 
 app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8080;
 app.listen(port);
 
 app.use((req, res, next) => {
