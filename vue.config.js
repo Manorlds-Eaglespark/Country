@@ -9,6 +9,7 @@ module.exports = {
       ROOT_API: process.env.NODE_ENV === "development" ? "http://127.0.0.1:5000" : "https://country-bite.herokuapp.com/",
     }
   },
+  
   devServer: {
     open: process.platform === 'darwin', //CHANGE YOUR PORT HERE!
     // https: true,
